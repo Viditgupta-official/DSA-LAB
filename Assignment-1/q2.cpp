@@ -12,7 +12,6 @@ int main() {
         cin >> arr[i];
     }
 
-    // Removing duplicates
     for (int i = 0; i < n; i++) {
         for (int j = i + 1; j < n; j++) {
             if (arr[i] == arr[j]) {
@@ -20,8 +19,8 @@ int main() {
                 for (int k = j; k < n - 1; k++) {
                     arr[k] = arr[k + 1];
                 }
-                n--;     // reduce size
-                j--;     // check new element at position j
+                n--;    // reduce size
+                j--;    // check new element at position j
             }
         }
     }

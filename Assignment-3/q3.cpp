@@ -8,9 +8,12 @@ bool isBalanced(string exp) {
         if (c=='(' || c=='[' || c=='{') s.push(c);
         else {
             if (s.empty()) return false;
-            char t = s.top(); s.pop();
-            if ((c==')' && t!='(') || (c==']' && t!='[') || (c=='}' && t!='{'))
-                return false;
+            char top = s.top(); s.pop();
+            if (c==')' && top!='(') return false;
+            else if (c==']' && top!='[') return false;
+            else if (c=='}' && top!='{') return false;
+            else{};
+            return true;
         }
     }
     return s.empty();
