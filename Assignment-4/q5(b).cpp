@@ -52,4 +52,10 @@ int main() {
     cout << "Top after pushing 40: " << s.top() << endl; // 40
 
     s.pop();
-    s.pop
+    s.pop();
+    cout << "Top after popping twice: " << s.top() << endl; // 10
+
+    s.pop();
+    s.pop(); // Underflow
+    return 0;
+}
