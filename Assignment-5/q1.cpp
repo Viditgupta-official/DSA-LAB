@@ -8,7 +8,6 @@ struct Node {
 
 Node* head = NULL;
 
-// Insertion at beginning
 void insertAtBeginning(int val) {
     Node* newNode = new Node();
     newNode->data = val;
@@ -16,7 +15,6 @@ void insertAtBeginning(int val) {
     head = newNode;
 }
 
-// Insertion at end
 void insertAtEnd(int val) {
     Node* newNode = new Node();
     newNode->data = val;
@@ -27,18 +25,16 @@ void insertAtEnd(int val) {
     temp->next = newNode;
 }
 
-// Insert before/after specific node
 void insertAfter(int key, int val) {
     Node* temp = head;
     while (temp && temp->data != key) temp = temp->next;
-    if (!temp) return; // key not found
+    if (!temp) return;
     Node* newNode = new Node();
     newNode->data = val;
     newNode->next = temp->next;
     temp->next = newNode;
 }
 
-// Deletion from beginning
 void deleteBeginning() {
     if (!head) return;
     Node* temp = head;
@@ -46,7 +42,6 @@ void deleteBeginning() {
     delete temp;
 }
 
-// Deletion from end
 void deleteEnd() {
     if (!head) return;
     if (!head->next) { delete head; head = NULL; return; }
@@ -56,7 +51,6 @@ void deleteEnd() {
     temp->next = NULL;
 }
 
-// Delete specific node
 void deleteNode(int key) {
     if (!head) return;
     if (head->data == key) { deleteBeginning(); return; }
@@ -69,7 +63,6 @@ void deleteNode(int key) {
     }
 }
 
-// Search node
 void searchNode(int key) {
     Node* temp = head;
     int pos = 1;
