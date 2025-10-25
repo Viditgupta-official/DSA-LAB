@@ -9,7 +9,7 @@ struct Node {
 class doublyLinkedList {
     Node* head;
 public:
-    doublyLinkedList() : head(nullptr) {};
+    doublyLinkedList() : head(nullptr) {}
 
     void insertEnd(int value) {
         Node* newNode = new Node{value, nullptr};
