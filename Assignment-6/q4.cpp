@@ -28,7 +28,7 @@ public:
         Node* fast = head;
         Node* prev = nullptr;
 
-        while (fast && fast->next) {
+        while (fast && fast->next != NULL) {
             fast = fast->next->next;
             Node* nextNode = slow->next;
             slow->next = prev;
@@ -36,12 +36,10 @@ public:
             slow = nextNode;
         }
 
-        // If the number of nodes is odd, skip the middle node
         if (fast) {
             slow = slow->next;
         }
 
-        // Compare the two halves
         Node* firstHalf = prev;
         Node* secondHalf = slow;
 

@@ -56,4 +56,3 @@ int main(){
     cout << "NULL\n";
     return 0;
 }
-
