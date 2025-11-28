@@ -2,50 +2,58 @@
 #include <vector>
 using namespace std;
 
-struct DSU {
-    vector<int> p, r;
-    DSU(int n){
-        p.resize(n);
-        r.assign(n,0);
-        for(int i=0;i<n;i++) p[i]=i;
-    }
-    int find_set(int u){
-        if(p[u]==u) return u;
-        return p[u]=find_set(p[u]);
-    }
-    void link_set(int u,int v){
-        if(r[u] > r[v]) p[v]=u;
-        else if(r[u] < r[v]) p[u]=v;
-        else{
-            p[v]=u;
-            r[u]++;
-        }
-    }
-    void union_set(int u,int v){
-        u = find_set(u);
-        v = find_set(v);
-        if(u!=v) link_set(u,v);
-    }
+struct Edge {
+    int u, v, wt;
 };
 
-int main(){
-    int V,E;
-    cin >> V >> E;
-    vector<array<int,3>> edges;
-    for(int i=0;i<E;i++){
-        int u,v,w;
-        cin >> u >> v >> w;
-        edges.push_back({w,u,v});
+// Simple find function (slow)
+int findParent(int node, vector<int> &parent) {
+    while (parent[node] != node)
+        node = parent[node];
+    return node;
+}
+
+// Simple union function
+void unionSet(int a, int b, vector<int> &parent) {
+    int pa = findParent(a, parent);
+    int pb = findParent(b, parent);
+    if (pa != pb)
+        parent[pb] = pa;   // attach one root to another
+}
+
+int main() {
+    int n, m;
+    cin >> n >> m;   // n = nodes, m = edges
+
+    vector<Edge> edges(m);
+    for (int i = 0; i < m; i++) {
+        cin >> edges[i].u >> edges[i].v >> edges[i].wt;
     }
-    sort(edges.begin(), edges.end());
-    DSU d(V);
-    int cost=0;
-    for(auto &e: edges){
-        int w=e[0], u=e[1], v=e[2];
-        if(d.find_set(u) != d.find_set(v)){
-            cost += w;
-            d.union_set(u,v);
+
+    // Step 1: sort edges by weight
+    sort(edges.begin(), edges.end(), [](Edge &a, Edge &b){
+        return a.wt < b.wt;
+    });
+
+    // Parent initialization
+    vector<int> parent(n+1);
+    for (int i = 1; i <= n; i++) parent[i] = i;
+
+    int totalWeight = 0;
+
+    cout << "Edges in MST:" << endl;
+
+    // Step 2: pick edges one by one
+    for (auto &e : edges) {
+        int pu = findParent(e.u, parent);
+        int pv = findParent(e.v, parent);
+
+        if (pu != pv) {                // no cycle
+            cout << e.u << " - " << e.v << " (" << e.wt << ")\n";
+            totalWeight += e.wt;
+            unionSet(pu, pv, parent);  // merge components
         }
     }
-    cout << cost;
+
+    cout << "Total MST Weight = " << totalWeight << endl;
 }
